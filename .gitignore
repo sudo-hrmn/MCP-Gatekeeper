@@ -29,3 +29,8 @@ graphify-out/
 .vscode/
 .idea/
 .DS_Store
+
+# Internal Agent & Spec Files
+.agents/
+*project-spec.md
+
