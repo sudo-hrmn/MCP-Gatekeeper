@@ -2,6 +2,7 @@
 Application configuration for MCP Trust Gateway.
 """
 import os
+import tempfile
 from typing import Optional
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -9,12 +10,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def get_default_db_url() -> str:
+    env_db = os.getenv("DATABASE_URL")
+    if env_db:
+        return env_db
+    tmp_db_path = os.path.join(tempfile.gettempdir(), "mcp_trust_gateway.db")
+    return f"sqlite+aiosqlite:///{tmp_db_path}"
+
 class Settings(BaseSettings):
     # Gateway settings
     HOST: str = Field(default="0.0.0.0", alias="GATEWAY_HOST")
     PORT: int = Field(default=8000, alias="GATEWAY_PORT")
     ADMIN_API_KEY: str = Field(default="trust-gateway-admin-key-secret", alias="ADMIN_API_KEY")
-    DATABASE_URL: str = Field(default="sqlite+aiosqlite:///mcp_trust_gateway.db", alias="DATABASE_URL")
+    DATABASE_URL: str = Field(default_factory=get_default_db_url, alias="DATABASE_URL")
     
     # LLM Security Classifier API Configuration (Supports Grok, OpenAI, DeepSeek, Ollama, etc.)
     LLM_API_KEY: Optional[str] = Field(default_factory=lambda: os.getenv("LLM_API_KEY") or os.getenv("GROK_API") or os.getenv("OPENAI_API_KEY"))
