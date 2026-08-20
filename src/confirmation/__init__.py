@@ -1,0 +1,1 @@
+"""Confirmation manager package."""
