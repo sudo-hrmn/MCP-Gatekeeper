@@ -157,9 +157,9 @@ sequenceDiagram
 
 ---
 
-## 🔑 Environment Configuration (`.env`)
+## 🔑 Environment Configuration
 
-The gateway reads generic LLM environment configuration from `.env`:
+When deploying to **FastMCP Cloud**, configure these environment variables in your **FastMCP Cloud Project Settings** (or via `.env` for local execution):
 
 ```env
 # LLM Security Classifier API Key (Supports Groq, OpenAI, DeepSeek, Ollama)
