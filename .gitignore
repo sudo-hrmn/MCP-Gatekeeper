@@ -21,6 +21,7 @@ ENV/
 .pytest_cache/
 .coverage
 htmlcov/
+tests/
 
 # Graphify Output
 graphify-out/
